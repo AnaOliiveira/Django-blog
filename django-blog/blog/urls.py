@@ -4,5 +4,6 @@ from blog.views import index, ola
 urlpatterns = [
     path('', index, name= "home"),
     path('index/', index, name= "index"),
-    path('ola/', ola, name= "ola")
+    path('ola/', ola, name= "ola"),
+    path('posts/all', ola, name="posts_list"),
 ]
