@@ -1,11 +1,15 @@
 import json
 from django.core.serializers.json import DjangoJSONEncoder
-from django.shortcuts import render
+from django.shortcuts import render,  get_object_or_404
 
 # Create your views here.
 
 from django.http import HttpResponse
 from blog.models import Post # Acrescentar
+
+def post_show(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    return render(request, 'post/detail.html', {'post': post})
 
 def index(request):
     # return HttpResponse('Olá Django - index')
