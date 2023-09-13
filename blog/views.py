@@ -1,6 +1,8 @@
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 from django.shortcuts import render,  get_object_or_404
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
 
 # Create your views here.
 
@@ -48,4 +50,10 @@ def get_post(request, post_id):
     )
     response['Access-Control-Allow-Origin'] = '*' # requisição de qualquer origem
     return response
-         
+
+
+class PostCreateView(CreateView):
+    model = Post
+    template_name = 'post/post_form.html'
+    fields = ('body_text', )
+    success_url = reverse_lazy('posts_list')
