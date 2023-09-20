@@ -17,6 +17,9 @@
         <h2>Em: {{ post.pub_date|date:"d / m / Y" }}</h2>
         <p>{{ post.body_text }}</p>
     </article>
+    <a href="{% url 'post_add' %}" class="btn btn-lg btn-primary font-weight-bold">
+        + Post
+        </a>
     {% endfor %}
 </body>
 
