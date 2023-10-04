@@ -9,11 +9,14 @@ from django.views.decorators.csrf import csrf_exempt
 from blog.models import Post # Acrescentar
 from blog.forms import PostModelForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 def post_show(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     return render(request, 'post/detail.html', {'post': post})
 
+@login_required # controle de acesso usando o decorador de função
 def index(request):
     # return HttpResponse('Olá Django - index')
     return render(request, 'index.html', {'titulo': 'Últimos Artigos'})
@@ -53,7 +56,7 @@ def get_post(request, post_id):
     return response
 
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin,CreateView):
     model = Post
     template_name = 'post/post_form.html'
     # fields = ('body_text', )
