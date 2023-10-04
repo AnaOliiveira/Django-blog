@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from blog.models import Post # Acrescentar
 from blog.forms import PostModelForm
-
+from django.contrib import messages
 
 def post_show(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
@@ -57,8 +57,13 @@ class PostCreateView(CreateView):
     model = Post
     template_name = 'post/post_form.html'
     # fields = ('body_text', )
-    success_url = reverse_lazy('posts_list')
+    success_url = reverse_lazy('posts_all')
     form_class = PostModelForm
+    success_message = 'Postagem salva com sucesso.'
+
+    def form_valid(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super(PostCreateView, self).form_valid(request, *args, **kwargs)
 
 
 class PostDetailView(DetailView):
