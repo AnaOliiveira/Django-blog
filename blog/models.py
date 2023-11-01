@@ -1,5 +1,8 @@
 from django.db import models
 
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
 # Create your models here.
 class Post(models.Model):
     body_text = models.TextField('Texto Principal')
@@ -15,3 +18,9 @@ class Post(models.Model):
         default=None,
         null=True
      )
+    autor = models.ForeignKey(
+        User, #chave estrangeira vinculada ao usuário
+        editable=False, # não permite editar 
+        on_delete = models.DO_NOTHING, # Não exclui a pergunta se o autor for removido
+        null=True # permite autor NULL para não conflitar com registros já existentes
+    )
